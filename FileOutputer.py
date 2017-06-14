@@ -14,11 +14,13 @@ class FileOutputer(object):
         print('%.2f%%' % per)
 
     def savefile(self,path):
-        filepath = "C:\\Users\\Administrator\\Desktop\\spider"
+        filepath = "C:\\Users\\pc\\Desktop\\spider"
         if not os.path.isdir(filepath):
             os.mkdir(filepath)
+        # '/'最后出现的位置
         pos = path.rindex('/')
         t = os.path.join(filepath, path[pos + 1:])
+        # print(t)
         return t
 
     def file_output(self, html_data):
@@ -30,7 +32,7 @@ class FileOutputer(object):
                 img_src = link['src']
                 # print("src:"+str(img_src))
                 img_data_origin = link.get('data-origin')
-                # 如果img_data_origin是否为None，是：img_url = img_src;
+                # img_data_origin是否为None，是：img_url = img_src;
                 img_url = (img_src if img_data_origin is None else img_data_origin)
                 urllib.request.urlretrieve(img_url, self.savefile(img_url),self.process)  # 下载到本地
                 print(str(img_url)+"下载成功\n")

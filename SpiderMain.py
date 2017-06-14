@@ -9,14 +9,17 @@ class SpiderMain(object):
         self.fileOutputer = FileOutputer.FileOutputer()
     def carry(self,root_url):
         count = 1
+        # 添加爬取网页的根url
         self.urlManager.add_new_url(root_url)
 
         while self.urlManager.has_new_urls():
             try:
                 url = self.urlManager.get_new_url()
                 print("SpiderMain正在准备爬取："+url)
+                # 获取网页数据html
                 html_data = self.htmlDownloader.download(url)
-                new_urls = self.htmlParser.parser(html_data)
+                # print(str(html_data))
+                new_urls = self.htmlParser.parser(html_data)        # set()
                 self.urlManager.add_new_urls(new_urls)
                 filecount = self.fileOutputer.file_output(html_data)
                 print(url+"中爬取了"+str(filecount)+"张图片")
@@ -30,7 +33,8 @@ class SpiderMain(object):
 if __name__ == "__main__":
     # http://www.bilibili.com/
     # https://www.douban.com/
-    root_url = 'http://image.so.com/'
+    # http: //image.so.com /
+    root_url = 'https://www.douban.com/'
     spider = SpiderMain()
     spider.carry(root_url)
     print("爬虫入口URL为:"+root_url)
